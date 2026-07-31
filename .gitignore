@@ -1,22 +1,21 @@
-# Terraform
+# --- Terraform ---
 .terraform/
 *.tfstate
 *.tfstate.*
 terraform.tfvars
 terraform.tfvars.json
-.terraform.lock.hcl
 override.tf
 override.tf.json
 *_override.tf
 *_override.tf.json
+.terraform.lock.hcl
 
-# Ansible
+# --- Ansible ---
 *.retry
-*.log
-ansible/group_vars/vault.yml   # если используете зашифрованные переменные
-ansible/inventory_*.yml        # динамические инвентари с секретами
+ansible/group_vars/vault.yml
+ansible/inventory_*.yml   # если используете динамические инвентари
 
-# Python
+# --- Python ---
 __pycache__/
 *.py[cod]
 *$py.class
@@ -28,11 +27,12 @@ ENV/
 pip-log.txt
 pip-delete-this-directory.txt
 
-# Docker
+# --- Docker ---
 *.pid
-docker-compose.override.yml    # если есть локальный оверрайд
+docker-compose.override.yml
+.dockerignore
 
-# IDE
+# --- IDE ---
 .vscode/
 .idea/
 *.swp
@@ -43,12 +43,12 @@ docker-compose.override.yml    # если есть локальный оверр
 .classpath
 .settings/
 
-# OS
+# --- OS ---
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# Secrets (личные файлы)
+# --- Secrets (личные файлы) ---
 *.env
 *.key
 *.pem
@@ -56,20 +56,22 @@ desktop.ini
 *.crt
 *.p12
 *.jks
-~/.secrets/
 .secrets/
-terraform.tfvars
-terraform.tfvars.json                    # если вдруг скопировали внутрь проекта
+.secrets.example          # если хотите скрыть пример, но можно и не скрывать
+configs/alertmanager/alertmanager.yml   # реальный сгенерированный конфиг
+terraform/terraform.tfvars
 
-# Временные файлы
+# --- Логи и временные файлы ---
+*.log
 *.tmp
 *.temp
 *.bak
 *.backup
-
-# Логи
-*.log
 logs/
 
-# Grafana (локальные данные)
+# --- Grafana (локальные данные) ---
 grafana.db
+
+# --- Загруженные файлы (если есть) ---
+downloads/
+tmp/
