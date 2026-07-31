@@ -1,0 +1,75 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+terraform.tfvars
+terraform.tfvars.json
+.terraform.lock.hcl
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Ansible
+*.retry
+*.log
+ansible/group_vars/vault.yml   # если используете зашифрованные переменные
+ansible/inventory_*.yml        # динамические инвентари с секретами
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Docker
+*.pid
+docker-compose.override.yml    # если есть локальный оверрайд
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.iml
+.project
+.classpath
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Secrets (личные файлы)
+*.env
+*.key
+*.pem
+*.ppk
+*.crt
+*.p12
+*.jks
+~/.secrets/
+.secrets/
+terraform.tfvars
+terraform.tfvars.json                    # если вдруг скопировали внутрь проекта
+
+# Временные файлы
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# Логи
+*.log
+logs/
+
+# Grafana (локальные данные)
+grafana.db
