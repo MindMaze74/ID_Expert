@@ -1,0 +1,93 @@
+---
+- name: Setup monitoring server
+  hosts: monitoring
+  become: yes
+  vars:
+    project_dir: /opt/monitoring
+
+  tasks:
+    - name: Install prerequisites
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+          - python3-pip
+        state: present
+        update_cache: yes
+
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker repository
+      apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+        state: present
+
+    - name: Install Docker
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: present
+        update_cache: yes
+
+    - name: Install Docker Compose plugin (v2)
+      apt:
+        name: docker-compose-plugin
+        state: present
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Ensure ubuntu user is in docker group
+      user:
+        name: ubuntu
+        groups: docker
+        append: yes
+
+    - name: Create project directory
+      file:
+        path: "{{ project_dir }}"
+        state: directory
+        mode: '0755'
+
+    - name: Copy docker-compose.yml
+      copy:
+        src: "../../docker-compose.yml"
+        dest: "{{ project_dir }}/docker-compose.yml"
+
+    - name: Copy Docker build context (mqtt-exporter)
+      copy:
+        src: "../../docker/"
+        dest: "{{ project_dir }}/docker/"
+
+    - name: Copy configs (Prometheus, Grafana, Alertmanager)
+      copy:
+        src: "../../configs/"
+        dest: "{{ project_dir }}/configs/"
+
+    - name: Render Alertmanager config with secrets
+      template:
+        src: "../../configs/alertmanager/alertmanager.yml.j2"
+        dest: "{{ project_dir }}/configs/alertmanager/alertmanager.yml"
+      # Условие убрано — шаблон применяется всегда,
+      # но если SMTP-переменные не заданы, Alertmanager не сможет отправлять письма.
+      # Рекомендуется задать их в group_vars/all.yml или через окружение.
+
+    - name: Ensure docker service is running
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Start Docker Compose
+      command: docker compose up -d
+      args:
+        chdir: "{{ project_dir }}"
+      environment:
+        GRAFANA_PASSWORD: "{{ grafana_password | default('admin') }}"
+      become: yes
+      become_user: ubuntu

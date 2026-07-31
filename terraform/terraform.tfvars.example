@@ -1,0 +1,14 @@
+cloud_id  = "ваш_cloud_id"
+folder_id = "ваш_folder_id"
+zone      = "ru-central1-a"
+bastion_name    = "bastion"
+monitoring_name = "monitoring"
+bastion_resources = {
+  cores  = 2
+  memory = 4
+}
+monitoring_resources = {
+  cores  = 4
+  memory = 8
+}
+my_ip = "ваш_внешний_IP/32"

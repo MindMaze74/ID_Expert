@@ -1,0 +1,5 @@
+topics:
+  - "tractor/+/+/telemetry"
+  - "forklift/+/+/telemetry"
+  - "cart/+/+/telemetry"
+  - "robot/+/+/telemetry"

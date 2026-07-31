@@ -1,0 +1,8 @@
+grafana_password: "{{ lookup('env', 'GRAFANA_PASSWORD') | default('admin') }}"
+smtp_host: "{{ lookup('env', 'SMTP_HOST') }}"
+smtp_port: "{{ lookup('env', 'SMTP_PORT') | default('587') }}"
+smtp_user: "{{ lookup('env', 'SMTP_USER') }}"
+smtp_password: "{{ lookup('env', 'SMTP_PASSWORD') }}"
+smtp_from: "{{ lookup('env', 'SMTP_FROM') }}"
+smtp_to: "{{ lookup('env', 'SMTP_TO') }}"
+smtp_tls: "{{ lookup('env', 'SMTP_TLS') | default('true') }}"

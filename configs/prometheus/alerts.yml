@@ -1,0 +1,44 @@
+groups:
+  - name: vehicle_alerts
+    interval: 30s
+    rules:
+      - alert: VehicleOffline
+        expr: (time() - vehicle_last_seen_timestamp) > 300
+        for: 0s
+        labels:
+          severity: critical
+        annotations:
+          summary: "ТС {{ $labels.vehicle_id }} ({{ $labels.vehicle_type }}) потеряло связь"
+          description: "Последние данные получены {{ $value }} секунд назад"
+      - alert: HighCPUTemp
+        expr: vehicle_temp_cpu_c > 75
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Высокая температура CPU у ТС {{ $labels.vehicle_id }}"
+          description: "Температура CPU = {{ $value }}°C"
+      - alert: RTKStatusNone
+        expr: vehicle_rtk_status{status="none"} == 1
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "RTK статус None для ТС {{ $labels.vehicle_id }}"
+          description: "RTK статус = None более 30 секунд"
+      - alert: LowFuel
+        expr: vehicle_fuel_level_pct < 10
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Низкий уровень топлива у ТС {{ $labels.vehicle_id }}"
+          description: "Уровень топлива = {{ $value }}%"
+      - alert: LowBattery
+        expr: vehicle_battery_soc_pct < 20
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Низкий заряд батареи у ТС {{ $labels.vehicle_id }}"
+          description: "Заряд = {{ $value }}%"

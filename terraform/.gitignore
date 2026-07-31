@@ -1,0 +1,77 @@
+# --- Terraform ---
+.terraform/
+*.tfstate
+*.tfstate.*
+terraform.tfvars
+terraform.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraform.lock.hcl
+
+# --- Ansible ---
+*.retry
+ansible/group_vars/vault.yml
+ansible/inventory_*.yml   # если используете динамические инвентари
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# --- Docker ---
+*.pid
+docker-compose.override.yml
+.dockerignore
+
+# --- IDE ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.iml
+.project
+.classpath
+.settings/
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Secrets (личные файлы) ---
+*.env
+*.key
+*.pem
+*.ppk
+*.crt
+*.p12
+*.jks
+.secrets/
+.secrets.example          # если хотите скрыть пример, но можно и не скрывать
+configs/alertmanager/alertmanager.yml   # реальный сгенерированный конфиг
+terraform/terraform.tfvars
+
+# --- Логи и временные файлы ---
+*.log
+*.tmp
+*.temp
+*.bak
+*.backup
+logs/
+
+# --- Grafana (локальные данные) ---
+grafana.db
+
+# --- Загруженные файлы (если есть) ---
+downloads/
+tmp/
